@@ -8,7 +8,7 @@ public class AgentModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private String id;
+    private Long id;
     @Column(name = "name")
     private String name;
     @Column(name = "gender")
@@ -20,7 +20,7 @@ public class AgentModel {
     }
 
     //Overloaded Constructor
-    public AgentModel(String id, String name){
+    public AgentModel(Long id, String name){
         this.id = id;
         this.name = name;
     }
@@ -28,11 +28,11 @@ public class AgentModel {
     // Getters and Setters
 
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
