@@ -5,10 +5,13 @@ import com.example.demo.model.AgentModel;
 import com.example.demo.repository.AgentRepository;
 import com.example.demo.response.AgentResponse;
 import com.example.demo.service.AgentService;
+import org.aspectj.weaver.loadtime.Agent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AgentServiceImpl implements AgentService {
@@ -22,15 +25,16 @@ public class AgentServiceImpl implements AgentService {
         try{
             agentResponse.setAgents(agentRepository.findAll());
         } catch (Exception e){
-            logger.info("SQL Exception while getting all agents");
+            logger.error("SQL Exception while getting all agents");
             throw new AgentException("Error getting agents :" + e.getMessage());
         }
         return agentResponse;
     }
 
     @Override
-    public AgentModel findAgentById() {
-        return null;
+    public AgentModel findAgentById(Long id) {
+        Optional<AgentModel> optional =  agentRepository.findById(id);
+        return optional.get();
     }
 
     @Override
@@ -38,18 +42,30 @@ public class AgentServiceImpl implements AgentService {
         try{
             agentRepository.save(agentModel);
         } catch (Exception e){
-            logger.info("SQL Exception while inserting agents");
+            logger.error("SQL Exception while inserting agents");
         }
         return agentModel;
     }
 
     @Override
-    public AgentModel updateAgent(AgentModel agentModel) {
-        return null;
+    public AgentModel updateAgent(AgentModel agentModel, Long id) {
+        try {
+            AgentModel agentModelExisting = agentRepository.findById(id).get();
+            agentModelExisting.setName(agentModel.getName());
+            agentModelExisting.setGender(agentModel.getGender());
+            agentRepository.save(agentModelExisting);
+        } catch (Exception e){
+            logger.error("SQL Exception while updating agents");
+        }
+        return agentModel;
     }
 
     @Override
     public void deleteAgent(Long id) {
-
+        try{
+            agentRepository.deleteById(id);
+        } catch(Exception e){
+            logger.error("SQL Error while deleting");
+        }
     }
 }

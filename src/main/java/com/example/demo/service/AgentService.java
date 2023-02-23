@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface AgentService {
     public AgentResponse findAllAgents() throws AgentException; //GET_ALL
-    public AgentModel findAgentById(); //SPECIFIC
+    public AgentModel findAgentById(Long id); //SPECIFIC
     public AgentModel saveAgent(AgentModel agentModel); //INSERT
-    public AgentModel updateAgent(AgentModel agentModel); //UPDATE
+    public AgentModel updateAgent(AgentModel agentModel, Long id); //UPDATE
     void deleteAgent(Long id);
 }
