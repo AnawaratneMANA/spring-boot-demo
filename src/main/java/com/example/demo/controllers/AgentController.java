@@ -44,4 +44,33 @@ public class AgentController {
         return status(HttpStatus.OK).body(agentService.saveAgent(agentModel));
     }
 
+    @ApiOperation(value = "Updating Agent")
+    @ApiResponses( value = {
+            @ApiResponse(code = HTTP_400_CODE, message = HTTP_400_MESSAGE),
+            @ApiResponse(code = HTTP_200_CODE, message = HTTP_200_MESSAGE),
+            @ApiResponse(code = HTTP_500_CODE, message = HTTP_500_MESSAGE),
+    })
+    @PutMapping("/agent/update/{id}")
+    public ResponseEntity<AgentModel> updateAgent(@RequestBody AgentModel agentModel, @PathVariable("id") Long agentId){
+        return status(HttpStatus.OK).body(agentService.updateAgent(agentModel, agentId));
+    }
+
+    @ApiOperation(value = "Delete Agent")
+    @ApiResponses( value = {
+            @ApiResponse(code = HTTP_400_CODE, message = HTTP_400_MESSAGE),
+            @ApiResponse(code = HTTP_200_CODE, message = HTTP_200_MESSAGE),
+            @ApiResponse(code = HTTP_500_CODE, message = HTTP_500_MESSAGE),
+    })
+    @DeleteMapping("/agent/delete/{id}")
+    public ResponseEntity<String> deleteAgent(@PathVariable("id") Long agentId){
+        agentService.deleteAgent(agentId);
+        return status(HttpStatus.OK).body("Deleted!");
+    }
+
+
+
+
+
+
+
 }
