@@ -9,6 +9,6 @@ import java.util.List;
 @JsonIgnoreProperties( ignoreUnknown = true)
 @EqualsAndHashCode(callSuper = false)
 @Data
-public class AgentResponse {
+public class AgentResponse extends GeneralResponse{
     private List<AgentModel> agents;
 }
