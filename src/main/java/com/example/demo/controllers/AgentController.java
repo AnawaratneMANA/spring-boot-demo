@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 import com.example.demo.exception.AgentException;
 import com.example.demo.model.AgentModel;
+import com.example.demo.provider.KeyclockAuthProvider;
 import com.example.demo.response.AgentResponse;
 import io.swagger.annotations.ApiOperation;
 import com.example.demo.service.AgentService;
@@ -11,16 +12,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.demo.config.Constants.APPLICATION_JSON_VALUE;
-import static com.example.demo.config.Constants.AgentProperties.AGENT;
+import static com.example.demo.config.Constants.*;
+import static com.example.demo.config.Constants.AgentProperties.*;
 import static com.example.demo.config.Constants.HttpCodesMessages.*;
 import static org.springframework.http.ResponseEntity.status;
 
 @RestController
-@RequestMapping( value = AGENT, produces = APPLICATION_JSON_VALUE)
+@RequestMapping( value = API + VERSION + AGENT, produces = APPLICATION_JSON_VALUE)
 public class AgentController {
     @Autowired
     AgentService agentService;
+
+    @Autowired
+    KeyclockAuthProvider keyclockAuthProvider;
 
     @ApiOperation(value = "Get All Agents")
     @ApiResponses( value = {
@@ -66,6 +70,13 @@ public class AgentController {
         agentService.deleteAgent(agentId);
         return status(HttpStatus.OK).body("Deleted!");
     }
+
+    @GetMapping("/agent/dev")
+    public String devTrigger(){
+        String respons = keyclockAuthProvider.registerKeycloakUser();
+        return respons;
+    }
+
 
 
 
