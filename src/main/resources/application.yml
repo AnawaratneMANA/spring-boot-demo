@@ -1,0 +1,7 @@
+#====================
+# System properties
+#====================
+
+auth:
+  keycloak:
+    url: http://localhost:8081/admin/realms/master/users
