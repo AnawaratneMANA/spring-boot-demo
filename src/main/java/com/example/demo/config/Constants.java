@@ -9,6 +9,10 @@ public final class Constants {
 
     }
 
+    public static final class ProductProperties {
+        public static final String PRODUCT = "/prod";
+    }
+
     public static final class HttpCodesMessages {
 
         public static final int HTTP_200_CODE = 200;
