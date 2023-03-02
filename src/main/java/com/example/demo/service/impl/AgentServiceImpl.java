@@ -2,9 +2,12 @@ package com.example.demo.service.impl;
 
 import com.example.demo.exception.AgentException;
 import com.example.demo.model.AgentModel;
+import com.example.demo.provider.KeyclockAuthProvider;
+import com.example.demo.provider.request.KeyCloakAgentRequest;
 import com.example.demo.repository.AgentRepository;
 import com.example.demo.response.AgentResponse;
 import com.example.demo.service.AgentService;
+import jakarta.transaction.Transactional;
 import org.aspectj.weaver.Constants;
 import org.aspectj.weaver.loadtime.Agent;
 import org.slf4j.Logger;
@@ -22,6 +25,9 @@ public class AgentServiceImpl implements AgentService {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private AgentRepository agentRepository;
+
+    @Autowired
+    KeyclockAuthProvider keyclockAuthProvider;
     @Override
     public AgentResponse findAllAgents() throws AgentException {
         AgentResponse agentResponse = new AgentResponse();
@@ -45,13 +51,23 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
+    @Transactional
     public AgentModel saveAgent(AgentModel agentModel) {
         try{
             agentRepository.save(agentModel);
+            keyclockAuthProvider.addKeyCloakAgents(AgentConversion(agentModel));
         } catch (Exception e){
             logger.error("SQL Exception while inserting agents");
         }
         return agentModel;
+    }
+
+    private KeyCloakAgentRequest AgentConversion(AgentModel agentModel){
+        KeyCloakAgentRequest keyCloakAgentRequest = new KeyCloakAgentRequest();
+        keyCloakAgentRequest.setFirstName(agentModel.getName());
+        keyCloakAgentRequest.setLastName("defaultName");
+        keyCloakAgentRequest.setEmail("default@email.com");
+        return keyCloakAgentRequest;
     }
 
     @Override

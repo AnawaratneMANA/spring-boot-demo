@@ -26,7 +26,7 @@ public class AgentController {
     @Autowired
     KeyclockAuthProvider keyclockAuthProvider;
 
-    @ApiOperation(value = "Get All Agents")
+    @ApiOperation(value = "Get All Local Agents")
     @ApiResponses( value = {
             @ApiResponse(code = HTTP_400_CODE, message = HTTP_400_MESSAGE),
             @ApiResponse(code = HTTP_200_CODE, message = HTTP_200_MESSAGE),
@@ -35,6 +35,17 @@ public class AgentController {
     @GetMapping("/")
     public ResponseEntity<AgentResponse> getAllAgents() throws AgentException {
          return status(HttpStatus.OK).body(agentService.findAllAgents());
+    }
+
+    @ApiOperation(value = "Get All KeyCloak Agents")
+    @ApiResponses( value = {
+            @ApiResponse(code = HTTP_400_CODE, message = HTTP_400_MESSAGE),
+            @ApiResponse(code = HTTP_200_CODE, message = HTTP_200_MESSAGE),
+            @ApiResponse(code = HTTP_500_CODE, message = HTTP_500_MESSAGE),
+    })
+    @GetMapping("/keycloak/users")
+    public ResponseEntity<AgentResponse> getAllKeyCloakAgents() throws AgentException {
+        return status(HttpStatus.OK).body(agentService.findAllAgents());
     }
 
     @ApiOperation(value = "Save Agent")
@@ -72,9 +83,14 @@ public class AgentController {
     }
 
     @GetMapping("/agent/dev")
-    public String devTrigger(){
-        String respons = keyclockAuthProvider.registerKeycloakUser();
+    public String devTriggerGET(){
+        String respons = keyclockAuthProvider.retriveKeyCloakAgents();
         return respons;
+    }
+
+    @PostMapping("/agent/dev")
+    public String devTriggerPOST(){
+        return "DEV / POST";
     }
 
 

@@ -10,6 +10,6 @@ public class AuthManager {
     KeyclockAuthProvider keyclockAuthProvider;
 
     public void keycloakUserRegistration(){
-        keyclockAuthProvider.registerKeycloakUser();
+        keyclockAuthProvider.retriveKeyCloakAgents();
     }
 }
