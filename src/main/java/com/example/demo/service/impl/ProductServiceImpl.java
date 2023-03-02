@@ -4,6 +4,7 @@ import com.example.demo.model.ProductCategory;
 import com.example.demo.model.ProductsModel;
 import com.example.demo.repository.ProductCategoryRepository;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.response.ProductCategoryResponse;
 import com.example.demo.response.ProductResponse;
 import com.example.demo.service.ProductService;
 import org.slf4j.Logger;
@@ -36,6 +37,22 @@ public class ProductServiceImpl implements ProductService {
     public ProductsModel saveProduct(ProductsModel productsModel) {
         productRepository.save(productsModel);
         return productsModel;
+    }
+
+    @Override
+    public ProductCategoryResponse getAllProductCategories() {
+        ProductCategoryResponse productCategoryResponse = new ProductCategoryResponse();
+        try {
+            productCategoryResponse.setListOfProductCategories(productCategoryRepository.findAll());
+            productCategoryResponse.setStatusCode(HTTP_200_CODE);
+            productCategoryResponse.setMessage("Success!");
+            return productCategoryResponse;
+        } catch (Exception e){
+            logger.error("Something wrong with getting all Product Categories");
+            productCategoryResponse.setStatusCode(HTTP_500_CODE);
+            productCategoryResponse.setMessage("Internal Server Error!");
+            return null;
+        }
     }
 
     @Override

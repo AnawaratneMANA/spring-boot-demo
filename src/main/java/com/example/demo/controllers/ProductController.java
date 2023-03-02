@@ -5,6 +5,7 @@ import com.example.demo.model.AgentModel;
 import com.example.demo.model.ProductCategory;
 import com.example.demo.model.ProductsModel;
 import com.example.demo.response.AgentResponse;
+import com.example.demo.response.ProductCategoryResponse;
 import com.example.demo.response.ProductResponse;
 import com.example.demo.service.ProductService;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,17 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @ApiOperation(value = "Get All Product Categories")
+    @ApiResponses( value = {
+            @ApiResponse(code = HTTP_400_CODE, message = HTTP_400_MESSAGE),
+            @ApiResponse(code = HTTP_200_CODE, message = HTTP_200_MESSAGE),
+            @ApiResponse(code = HTTP_500_CODE, message = HTTP_500_MESSAGE),
+    })
+    @GetMapping("/prod-category")
+    public ResponseEntity<ProductCategoryResponse> getAllCategories() {
+        return status(HttpStatus.OK).body(productService.getAllProductCategories());
+    }
 
     @ApiOperation(value = "Save Product")
     @ApiResponses( value = {

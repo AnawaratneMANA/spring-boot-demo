@@ -84,8 +84,8 @@ public class AgentController {
 
     @GetMapping("/agent/dev")
     public String devTriggerGET(){
-        String respons = keyclockAuthProvider.retriveKeyCloakAgents();
-        return respons;
+        String response = keyclockAuthProvider.retriveKeyCloakAgents();
+        return response;
     }
 
     @PostMapping("/agent/dev")
