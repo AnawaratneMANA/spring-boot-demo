@@ -13,6 +13,10 @@ public final class Constants {
         public static final String PRODUCT = "/prod";
     }
 
+    public static final class StudentCourseProperties {
+        public static final String STU_COURSE = "/stu-course";
+    }
+
     public static final class HttpCodesMessages {
 
         public static final int HTTP_200_CODE = 200;
