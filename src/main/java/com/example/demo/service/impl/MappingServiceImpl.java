@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.aspect.ProfilingTracker;
 import com.example.demo.model.ManyToMany.Course;
 import com.example.demo.model.ManyToMany.Student;
 import com.example.demo.repository.CourseRepository;
@@ -30,7 +31,7 @@ public class MappingServiceImpl implements MappingService {
             return mappingResponse;
         }
     }
-
+    @ProfilingTracker
     @Override
     public MappingResponse ifExistStudent(Student student) {
         MappingResponse mappingResponse = new MappingResponse();
