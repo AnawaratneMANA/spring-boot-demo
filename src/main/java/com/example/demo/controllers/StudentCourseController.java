@@ -70,7 +70,9 @@ public class StudentCourseController {
         if (!studentRepository.existsById(studentId)) {
             throw new Exception("Not found Student with id = " + studentId);
         }
-        List<Course> courses = courseRepository.findCoursesByStudent(studentId);
+        Student student = new Student();
+        student.setId(3L);
+        List<Course> courses = courseRepository.findByLikes(student);
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
     @GetMapping("/student")

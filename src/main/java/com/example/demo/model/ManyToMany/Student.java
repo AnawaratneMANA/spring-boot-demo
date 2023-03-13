@@ -25,7 +25,7 @@ public class Student {
 
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.ALL
             })
