@@ -13,16 +13,16 @@ import java.io.IOException;
  */
 @Service
 public class FtpCustomClient {
-    private FTPClient ftpClient;
+    private FTPSClient ftpClient;
 
     public FtpCustomClient() {
-        ftpClient = new FTPClient();
+        ftpClient = new FTPSClient();
     }
 
     /**
      * Get a instance of FTPClient Initiated with credentials.
      */
-    public synchronized FTPClient getFtpClient() {
+    public synchronized FTPSClient getFtpClient() {
         try {
             ftpClient.connect("192.168.40.191", 21);
             ftpClient.login("tester", "password");
